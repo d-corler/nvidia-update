@@ -63,7 +63,8 @@ else {
 
 
 # Checking currently installed driver version
-Write-Host "Attempting to detect currently installed driver version..."
+Write-Host "Attempting 
+ect currently installed driver version..."
 if (Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\nvlddmkm -Name 'DCHUVen' -ErrorAction Ignore) {
     Write-Host -ForegroundColor Yellow "DCH driver are not supported. Windows Update will download and install the NVIDIA DCH Display Driver."
     Write-Host "Press any key to exit..."
@@ -72,7 +73,7 @@ if (Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\nvlddmkm -Nam
 }
 
 try {
-    $VideoController = Get-WmiObject -ClassName Win32_VideoController | Where-Object { $_.Name -match "NVIDIA" }
+    $VideoController = Get-WmiObject -ClassName Win32_VideoController | Where-Object { $_.VideoProcessor -match "NVIDIA" }
     $ins_version = ($VideoController.DriverVersion.Replace('.', '')[-5..-1] -join '').insert(3, '.')
 }
 catch {
